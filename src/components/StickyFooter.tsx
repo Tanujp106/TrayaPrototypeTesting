@@ -20,7 +20,7 @@ export function StickyFooter() {
   }, []);
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 shadow-[0px_-5px_6px_0px_rgba(0,0,0,0.08)] z-50">
+    <div className="fixed max-w-[411px] mx-auto bottom-0 left-0 right-0 shadow-[0px_-5px_6px_0px_rgba(0,0,0,0.08)] z-50">
       <div className="max-w-[411px] mx-auto flex flex-col">
         <div className="bg-[#e2b4ad] py-4 text-center rounded-t-xl overflow-hidden flex items-center justify-center">
           <AnimatePresence mode="wait">
