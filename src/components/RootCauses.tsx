@@ -17,12 +17,12 @@ export function RootCauses() {
   ];
 
   return (
-    <div className="pt-2 pb-6 flex flex-col gap-4 max-w-[411px] mx-auto overflow-hidden font-['Inter',sans-serif]">
+    <div className="pb-0 flex flex-col gap-4 max-w-[411px] mx-auto overflow-hidden font-['Inter',sans-serif]" style={{ paddingTop: '24px' }}>
       <div className="px-4">
-        <h2 className="text-[#404040] text-lg font-medium">Root Causes for hair fall</h2>
+        <h2 className="text-[#00ff00] text-lg font-medium">Root Causes for hair fall</h2>
         <p className="text-[#8c8c8c] text-lg font-medium">Based on your answers</p>
       </div>
-      
+
       <div className="flex gap-3 px-4 overflow-x-auto no-scrollbar pb-2 snap-x snap-mandatory scroll-pl-4">
         {causes.map((cause, idx) => (
           <div key={idx} className="bg-white border border-[#F0F0F0] rounded-xl max-w-[240px] h-[128px] flex flex-col overflow-hidden shrink-0 snap-start">

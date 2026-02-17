@@ -62,7 +62,7 @@ export function HairNeeds() {
 
   return (
     <div className="content-stretch flex flex-col gap-[12px] items-start px-[16px] relative w-full max-w-[411px] mx-auto py-6">
-      <div className="w-full">
+      <div className="w-full flex flex-col gap-[4px]">
         <p className="leading-[22px] relative shrink-0 text-[#404040] text-[18px] font-medium w-full">
           What your hair needs to recover
         </p>

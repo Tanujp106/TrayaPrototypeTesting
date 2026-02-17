@@ -1,10 +1,30 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "motion/react";
 import svgPaths from "../imports/svg-0k8jgopwj0";
-import exampleImage from "figma:asset/2a9515b0e83c1fdf6e787d373b2092f94068aa03.png";
+import resultsImage from "../assets/frame-132.png";
 
 export function Hero() {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
+
+  useEffect(() => {
+    if (isSheetOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isSheetOpen]);
+
+  const scrollToRoutine = () => {
+    const routineSection = document.getElementById('routine-section');
+    if (routineSection) {
+      routineSection.scrollIntoView({ behavior: 'smooth' });
+      setIsSheetOpen(false);
+    }
+  };
 
   return (
     <div className="px-3 pt-3 pb-1 w-full max-w-[411px] mx-auto font-['Inter',sans-serif]">
@@ -173,17 +193,19 @@ export function Hero() {
         </div>
       </div>
 
-      <AnimatePresence>
-        {isSheetOpen && (
-          <>
-            {/* Backdrop */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsSheetOpen(false)}
-              className="fixed inset-0 bg-black/60 z-50 backdrop-blur-sm"
-            />
+      {createPortal(
+        <AnimatePresence>
+          {isSheetOpen && (
+            <>
+              {/* Backdrop */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setIsSheetOpen(false)}
+                className="fixed inset-0 bg-black/60 backdrop-blur-sm"
+                style={{ zIndex: 9998 }}
+              />
 
             {/* Bottom Sheet */}
             <motion.div
@@ -191,21 +213,21 @@ export function Hero() {
               animate={{ y: 0 }}
               exit={{ y: "100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="fixed bottom-0 left-0 right-0 z-50 bg-white rounded-t-[32px] overflow-hidden shadow-2xl pb-8"
-              style={{ maxHeight: '90vh' }}
+              className="fixed bottom-0 left-0 right-0 bg-white rounded-t-[32px] shadow-2xl flex flex-col pb-32"
+              style={{ maxHeight: 'calc(100vh + 100px)', zIndex: 9999 }}
             >
               {/* Handle */}
-              <div className="w-full flex justify-center pt-3 pb-1">
+              <div className="w-full flex justify-center pt-3 pb-1 flex-shrink-0">
                 <div className="w-[48px] h-[5px] bg-[#E5E7EB] rounded-full" />
               </div>
 
               {/* Content */}
-              <div className="px-6 pt-2 pb-8 flex flex-col items-center text-center">
+              <div className="px-6 pt-2 flex flex-col items-center text-center overflow-y-auto" style={{ paddingBottom: '32px' }}>
                 {/* Image */}
                 <div className="mb-8 w-full max-w-[320px] flex justify-center">
                   <img
-                    src={exampleImage}
-                    alt="Results analysis"
+                    src={resultsImage}
+                    alt="93% customers saw results"
                     className="w-full object-contain max-h-[250px]"
                   />
                 </div>
@@ -223,10 +245,10 @@ export function Hero() {
                 {/* Buttons */}
                 <div className="w-full flex flex-col gap-3">
                   <button
-                    onClick={() => setIsSheetOpen(false)}
+                    onClick={scrollToRoutine}
                     className="w-full h-[56px] rounded-full bg-[#C4695B] text-white text-[17px] font-semibold shadow-[0_4px_12px_rgba(196,105,91,0.3)] hover:bg-[#b05a4d] transition-colors"
                   >
-                    Continue
+                    Check my customised plan
                   </button>
                   <button
                     onClick={() => setIsSheetOpen(false)}
@@ -238,8 +260,10 @@ export function Hero() {
               </div>
             </motion.div>
           </>
-        )}
-      </AnimatePresence>
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
     </div>
   );
 }

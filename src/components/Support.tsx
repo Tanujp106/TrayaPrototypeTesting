@@ -1,7 +1,28 @@
+import { useState, useRef } from "react";
 import imgGeminiGeneratedImageIzle3Hizle3HizlePhotoroom1 from "figma:asset/3c92514a81cfe8dc15834f05a31d39cd07f02438.png";
 import imgImagePhotoroom1 from "figma:asset/c8861b364d7992414734c8097cb915d07b916910.png";
 
 export function Support() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const handleScroll = () => {
+    if (scrollRef.current) {
+      const scrollLeft = scrollRef.current.scrollLeft;
+      const containerWidth = scrollRef.current.clientWidth;
+      const index = Math.round(scrollLeft / containerWidth);
+      setCurrentIndex(Math.max(0, Math.min(index, 1)));
+    }
+  };
+
+  const scrollToCard = (index: number) => {
+    if (scrollRef.current) {
+      const containerWidth = scrollRef.current.clientWidth;
+      scrollRef.current.scrollTo({ left: index * containerWidth, behavior: 'smooth' });
+      setCurrentIndex(index);
+    }
+  };
+
   return (
     <div className="pt-2 pb-6 flex flex-col gap-5 max-w-[411px] mx-auto overflow-hidden">
       <div className="px-4">
@@ -10,7 +31,7 @@ export function Support() {
       </div>
 
       <div className="px-4">
-        <div className="flex gap-4 overflow-x-auto no-scrollbar snap-x">
+        <div ref={scrollRef} onScroll={handleScroll} className="flex gap-4 overflow-x-auto no-scrollbar snap-x snap-mandatory">
           {/* Card 1 */}
           <div className="bg-[#f9f0ef] border border-[#e7c3bd] rounded-xl relative min-w-full h-[363px] overflow-hidden snap-center">
             <img 
@@ -68,8 +89,16 @@ export function Support() {
         </div>
 
         <div className="flex justify-center gap-2 mt-4">
-          <div className="size-2 rounded-full bg-[#dca59d]" />
-          <div className="size-2 rounded-full bg-[#edd2ce]" />
+          {[0, 1].map((index) => (
+            <button
+              key={index}
+              onClick={() => scrollToCard(index)}
+              className={`rounded-full transition-all duration-300 ${
+                currentIndex === index ? "bg-[#dca59d] size-2" : "bg-[#edd2ce] size-2"
+              }`}
+              aria-label={`Go to card ${index + 1}`}
+            />
+          ))}
         </div>
       </div>
     </div>

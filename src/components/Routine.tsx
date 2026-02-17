@@ -63,7 +63,7 @@ const NIGHT_PRODUCTS: Product[] = [
     id: "night-2",
     step: "Step 2",
     name: "Sleep Support Tablets",
-    price: "₹320",
+    price: "FREE",
     oldPrice: "₹500",
     added: true,
     tag: "Better Sleep",
@@ -193,7 +193,7 @@ export function Routine({
   };
 
   return (
-    <div className="pt-2 pb-8 flex flex-col gap-6 max-w-[411px] mx-auto overflow-hidden bg-white font-['Inter',sans-serif]">
+    <div id="routine-section" className="pt-2 pb-8 flex flex-col gap-6 max-w-[411px] mx-auto overflow-hidden bg-white font-['Inter',sans-serif]">
       <div className="px-4 flex items-end justify-between">
         <div className="flex flex-col gap-1">
           <h2 className="text-[#404040] font-medium tracking-tight text-[18px]">
@@ -208,7 +208,7 @@ export function Routine({
       <div className="px-4 flex gap-3">
         <button
           onClick={() => setActiveTab("Morning")}
-          className={`flex items-center gap-2 pr-5 pl-3 py-3 rounded-full border transition-all font-semibold text-[14px] ${
+          className={`flex items-center gap-2 pr-5 pl-3 py-3 rounded-full border transition-all font-medium text-[14px] ${
             activeTab === "Morning"
               ? "bg-[#f9f0ef] border-[#c4695b] text-[#c4695b]"
               : "bg-white border-[#ececec] text-[#404040]"
@@ -230,7 +230,7 @@ export function Routine({
         </button>
         <button
           onClick={() => setActiveTab("Night")}
-          className={`flex items-center gap-2 px-5 py-2 rounded-full border transition-all font-semibold text-[14px] ${
+          className={`flex items-center gap-2 px-5 py-2 rounded-full border transition-all font-medium text-[14px] ${
             activeTab === "Night"
               ? "bg-[#f9f0ef] border-[#c4695b] text-[#c4695b]"
               : "bg-white border-[#ececec] text-[#404040]"
